@@ -40,3 +40,28 @@
 .read-the-docs {
   color: #888;
 }
+
+/* --------HOME PAGE-------- */
+.home .playBtn {
+  margin-top: 50px;
+}
+
+.home .playBtn a {
+  background-color: #399E5A;
+  padding: 15px 40px;
+  border-radius: 10px;
+  color: white;
+  transition: all 0.4s ease-in-out;
+}
+
+.home .playBtn a:hover {
+  background-color: #26532B;
+}
+
+
+.home .copyright {
+  position: absolute;
+  bottom: 0;
+  right: 15px;
+  font-size: 13px;
+}
