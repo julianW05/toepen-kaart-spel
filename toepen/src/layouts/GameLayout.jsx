@@ -2,37 +2,41 @@ import { useEffect, useState } from 'react';
 import GetHands from '../functions/GetHands.jsx';
 
 export default function GameLayout() {
-    const [deckId, setDeckId] = useState(null);
-    const [hands, setHands] = useState({
-        playerHand: null,
-        bot1Hand: null,
-        bot2Hand: null,
-        bot3Hand: null
-    });
+  const [deckId, setDeckId] = useState(null);
+  const [hands, setHands] = useState({
+    playerHand: null,
+    bot1Hand: null,
+    bot2Hand: null,
+    bot3Hand: null
+  });
 
-    const fetchDeck = async () => {
-      try {
-        const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?cards=AS,AD,AC,AH,JS,QS,KS,JD,QD,KD,JC,QC,KC,JH,QH,KH,7S,8S,9S,0S,7D,8D,9D,0D,7C,8C,9C,0C,7H,8H,9H,0H');
-        const data = await response.json();
-        setDeckId(data.deck_id);
-      }
-      catch (error) {
-        console.log(error);
-      }
+  const fetchDeck = async () => {
+    try {
+      const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?cards=AS,AD,AC,AH,JS,QS,KS,JD,QD,KD,JC,QC,KC,JH,QH,KH,7S,8S,9S,0S,7D,8D,9D,0D,7C,8C,9C,0C,7H,8H,9H,0H');
+      const data = await response.json();
+      setDeckId(data.deck_id);
+    } catch (error) {
+      console.log(error);
     }
+  }
 
-    useEffect(() => {
-      fetchDeck();
-    }, [])
+  useEffect(() => {
+    fetchDeck();
+  }, []);
 
-    useEffect(() => {
-      if (deckId) {
-        const handsData = GetHands(deckId);
+  useEffect(() => {
+    if (deckId) {
+      const fetchData = async () => {
+        const handsData = await GetHands(deckId);
         if (handsData) {
           setHands(handsData);
         }
-      }
-    }, [deckId]);
+      };
+      fetchData();
+    }
+  }, [deckId]);
+
+  console.log(hands);
 
     return (
         <div className="game">
@@ -83,10 +87,9 @@ export default function GameLayout() {
               </div>
             </div>
             <div className="bottom-mid">
-              <img src="https://media.discordapp.net/attachments/894538357793767474/1159451863410819143/kisspng-ace-of-hearts-playing-card-card-game-stock-photogr-5afe5ddd5f6553.2813311815266196133908.jpg?ex=653112b1&is=651e9db1&hm=1846f7b1ba9a626d774dd709f7267a8793acdfeb977ab90e658cd79f858acf51&=&width=230&height=325" alt="kaart" />
-              <img src="https://media.discordapp.net/attachments/894538357793767474/1159451863410819143/kisspng-ace-of-hearts-playing-card-card-game-stock-photogr-5afe5ddd5f6553.2813311815266196133908.jpg?ex=653112b1&is=651e9db1&hm=1846f7b1ba9a626d774dd709f7267a8793acdfeb977ab90e658cd79f858acf51&=&width=230&height=325" alt="kaart" />
-              <img src="https://media.discordapp.net/attachments/894538357793767474/1159451863410819143/kisspng-ace-of-hearts-playing-card-card-game-stock-photogr-5afe5ddd5f6553.2813311815266196133908.jpg?ex=653112b1&is=651e9db1&hm=1846f7b1ba9a626d774dd709f7267a8793acdfeb977ab90e658cd79f858acf51&=&width=230&height=325" alt="kaart" />
-              <img src="https://media.discordapp.net/attachments/894538357793767474/1159451863410819143/kisspng-ace-of-hearts-playing-card-card-game-stock-photogr-5afe5ddd5f6553.2813311815266196133908.jpg?ex=653112b1&is=651e9db1&hm=1846f7b1ba9a626d774dd709f7267a8793acdfeb977ab90e658cd79f858acf51&=&width=230&height=325" alt="kaart" />
+              {hands.playerHand && hands.playerHand.map((card, index) => (
+                <img key={index} src={card.image} alt="kaart" />
+              ))}
             </div>
             <div className="bottom-right">
               <a>Toepen</a>
