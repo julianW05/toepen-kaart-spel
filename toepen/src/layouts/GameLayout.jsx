@@ -1,31 +1,38 @@
 import { useEffect, useState } from 'react';
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { NavLink, Link, Outlet, useNavigate, useParams } from "react-router-dom";
-import { collection, query, where, getDocs, addDoc, updateDoc, doc, getDoc } from "firebase/firestore";
-import { db } from '../Firebase-config.jsx';
+import GetHands from '../functions/GetHands.jsx';
 
 export default function GameLayout() {
-    const [deck, setDeck] = useState(null)
+    const [deckId, setDeckId] = useState(null);
+    const [hands, setHands] = useState({
+        playerHand: null,
+        bot1Hand: null,
+        bot2Hand: null,
+        bot3Hand: null
+    });
 
     const fetchDeck = async () => {
       try {
-        const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?cards=AS,AD,AC,AH,JS,QS,KS,JD,QD,KD,JC,QC,KC,JH,QH,KH,7S,8S,9S,0S,7D,8D,9D,0D,7C,8C,9C,0C,7H,8H,9H,0H')
-        const data = await response.json()
-        setDeck(data)
+        const response = await fetch('https://deckofcardsapi.com/api/deck/new/shuffle/?cards=AS,AD,AC,AH,JS,QS,KS,JD,QD,KD,JC,QC,KC,JH,QH,KH,7S,8S,9S,0S,7D,8D,9D,0D,7C,8C,9C,0C,7H,8H,9H,0H');
+        const data = await response.json();
+        setDeckId(data.deck_id);
       }
       catch (error) {
-        console.log(error)
+        console.log(error);
       }
     }
 
     useEffect(() => {
-      fetchDeck()
+      fetchDeck();
     }, [])
 
     useEffect(() => {
-      if (deck)
-      console.log(deck)
-    }, [deck])
+      if (deckId) {
+        const handsData = GetHands(deckId);
+        if (handsData) {
+          setHands(handsData);
+        }
+      }
+    }, [deckId]);
 
     return (
         <div className="game">
