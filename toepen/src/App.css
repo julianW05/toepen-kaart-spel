@@ -127,6 +127,10 @@
   justify-content: space-between;
 }
 
+.game .mid-bar .mid-mid .mid-mid-mid img {
+  rotate: 90deg;
+}
+
 /*--BUTTONS--*/
 
 .game .top-bar .top-left, .game .bottom-bar .bottom-left {
