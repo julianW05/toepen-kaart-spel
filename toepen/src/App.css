@@ -79,12 +79,12 @@
 } 
 
 .game .top-bar .top-left, .game .top-bar .top-right, .game .bottom-bar .bottom-left, .game .bottom-bar .bottom-right, .game .mid-bar .mid-left, .game .mid-bar .mid-right {
-  width: 27.5%;
+  width: 17.5%;
   height: 100%;
 }
 
 .game .top-bar .top-mid, .game .bottom-bar .bottom-mid, .game .mid-bar .mid-mid {
-  width: 45%;
+  width: 65%;
   height: 100%;
 }
 
@@ -114,12 +114,17 @@
   align-items: end;
 }
 
-.game .top-bar .top-mid img, .game .bottom-bar .bottom-mid img {
+.game .top-bar .top-mid img, .game .bottom-bar .bottom-mid img, .game .mid-bar .mid-mid .vertical-img {
   width: 100px;
 }
 
-.game .mid-bar .mid-left img, .game .mid-bar .mid-right img {
+.game .mid-bar .mid-left img, .game .mid-bar .mid-right img, .game .mid-bar .mid-mid .horizontal-img {
   height: 100px;
+}
+
+.game .mid-bar .mid-mid .mid-mid-mid {
+  display: flex;
+  justify-content: space-between;
 }
 
 /*--BUTTONS--*/
@@ -148,4 +153,5 @@
 
 .game  a:hover {
   background-color: var(--primary-color-hover);
+  color: var(--text-color);
 }
