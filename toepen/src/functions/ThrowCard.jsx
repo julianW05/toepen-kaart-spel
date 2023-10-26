@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
 
-const ThrowCard = async (e, index, player, handlePlayerThrow) => {
+const ThrowCard = async (e, index, player, hands, handleThrow) => {
   e.preventDefault();
+  const [Troef, setTroef] = useState("harten");
+  
+
+
+  console.log(player);
 
   if (player === "player") {
-    handlePlayerThrow(index);
+    handleThrow(e, index);
   } else if (player === "bot1") {
     // Handle bot1 logic
   } else if (player === "bot2") {

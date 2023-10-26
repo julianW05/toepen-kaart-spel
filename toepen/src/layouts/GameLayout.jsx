@@ -20,6 +20,7 @@ export default function GameLayout() {
 
   // Playerturn
   const [playerTurn, setPlayerTurn] = useState("all");
+  const [Turn, setTurn] = useState(1);
 
   // Get deck
   const fetchDeck = async () => {
@@ -34,17 +35,20 @@ export default function GameLayout() {
 
   // Throwcard
   const [selectedCards, setSelectedCards] = useState([]);
-  const handlePlayerThrow = (index) => {
+  const handleThrow = (e, index) => {
     if (hands.playerHand && hands.playerHand[index]) {
       setPlayerCard(hands.playerHand[index].image);
       setSelectedCards([...selectedCards, index]);
-      if(index == 1) {
-        playerTurn = "all";
+      setTurn(Turn + 1);
+      if (Turn === 0) {
+        setPlayerTurn("all");
       } else {
-        playerTurn = "none";
+        setPlayerTurn("none");
       }
+      console.log(hands);
+      ThrowCard(e, index, `bot${Turn}`, handleThrow);
     }
-  }
+  };  
 
   // Use effect
   useEffect(() => {
@@ -114,7 +118,7 @@ export default function GameLayout() {
             </div>
             <div className="bottom-mid">
               {hands.playerHand && hands.playerHand.map((card, index) => (
-                <a key={index} style={{ pointerEvents: `${playerTurn}` }} onClick={(e) => ThrowCard(e, index, "player", handlePlayerThrow)}>
+                <a key={index} style={{ pointerEvents: `${playerTurn}` }} onClick={(e) => ThrowCard(e, index, "player", hands, handleThrow)}>
                   <img className={`${index} ${selectedCards.includes(index) ? 'card-hidden' : ''}`} key={index} src={card.image} alt="kaart" />
                 </a>
               ))}
