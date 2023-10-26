@@ -89,6 +89,10 @@
 }
 
 /* --CARDS-- */
+.card-hidden {
+  display: none;
+}
+
 
 .game .top-bar .top-mid {
   display: flex;
@@ -100,6 +104,12 @@
   display: flex;
   justify-content: center;
   align-items: end;
+}
+
+.game .bottom-bar .bottom-mid a {
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
 }
 
 .game .mid-bar .mid-left {
