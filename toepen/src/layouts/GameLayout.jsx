@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import GetHands from '../functions/GetHands.jsx';
 import ThrowCard from '../functions/ThrowCard.jsx';
+import DetermineRoundWinner from '../functions/DetermineRoundWinner.jsx';
 
 export default function GameLayout() {
   // All cards!
@@ -21,6 +22,11 @@ export default function GameLayout() {
   // Playerturn
   const [playerTurn, setPlayerTurn] = useState("all");
   const [Turn, setTurn] = useState(1);
+  const [winner, setWinner] = useState(null); 
+  const [thrownCards, setThrownCards] = useState([]);
+  const [troef, setTroef] = useState(null);
+
+  console.log(thrownCards);
 
   // Get deck
   const fetchDeck = async () => {
@@ -45,10 +51,24 @@ export default function GameLayout() {
       } else {
         setPlayerTurn("none");
       }
-      console.log(hands);
-      ThrowCard(e, index, `bot${Turn}`, handleThrow);
+      const playedCard = { ...hands.playerHand[index], player: "player" };
+      setThrownCards((prevThrownCards) => [...prevThrownCards, playedCard]); 
+      ThrowCard(e, index, `bot${Turn}`, hands, handleThrow, setBot1Card, setBot2Card, setBot3Card, setThrownCards, thrownCards, getWinner);
     }
   };  
+
+  const getWinner = (Troef) => {
+    setTroef(Troef);
+  };
+
+  useEffect(() => {
+    if (thrownCards.length === 4) {
+      if (troef) {
+        DetermineRoundWinner({ setThrownCards, thrownCards, Troef: troef });
+      }
+    }
+  }, [thrownCards]);
+    
 
   // Use effect
   useEffect(() => {
@@ -118,7 +138,7 @@ export default function GameLayout() {
             </div>
             <div className="bottom-mid">
               {hands.playerHand && hands.playerHand.map((card, index) => (
-                <a key={index} style={{ pointerEvents: `${playerTurn}` }} onClick={(e) => ThrowCard(e, index, "player", hands, handleThrow)}>
+                <a key={index} style={{ pointerEvents: `${playerTurn}` }} onClick={(e) => ThrowCard(e, index, "player", hands, handleThrow, setBot1Card, setBot2Card, setBot3Card, setThrownCards, thrownCards, getWinner)}>
                   <img className={`${index} ${selectedCards.includes(index) ? 'card-hidden' : ''}`} key={index} src={card.image} alt="kaart" />
                 </a>
               ))}

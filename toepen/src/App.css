@@ -128,13 +128,18 @@
   width: 100px;
 }
 
-.game .mid-bar .mid-left img, .game .mid-bar .mid-right img, .game .mid-bar .mid-mid .horizontal-img {
+.game .mid-bar .mid-left img, .game .mid-bar .mid-right img {
   height: 100px;
+}
+
+.game .mid-bar .mid-mid .horizontal-img {
+  height: 138.938px;
 }
 
 .game .mid-bar .mid-mid .mid-mid-mid {
   display: flex;
   justify-content: space-between;
+  height: 114.93799999999999px;
 }
 
 .game .mid-bar .mid-mid .mid-mid-mid img {
